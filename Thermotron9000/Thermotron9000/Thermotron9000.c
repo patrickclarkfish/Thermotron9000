@@ -25,7 +25,6 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
-#include <avr/wdt.h>
 #include <util/delay.h>
 #include <stdio.h>
 #include "lcd/lcd.h"
@@ -109,7 +108,7 @@ void handle_rx(mrf_rx_info_t *rxinfo, uint8_t *rx_buffer) {
 	//printf_P(PSTR("Packet data, starting from %u:\n"), i);
 	char data[9];
 	int index = 0;
-	while((rx_buffer[i] != '~') && (index < 8))
+	while((rx_buffer[i] != '!') && (index < 8))
 	{
 		data[index++] = rx_buffer[i++];
 	}
@@ -164,7 +163,6 @@ int main(void)
 		lcd_command(LCD_MOVE_DISP_LEFT);
 	}
 	initSPI();
-	wdt_enable(WDTO_2S);
 	DDRD |= (1<<PIND1);
 		
 	//Set the interrupt bit
@@ -185,7 +183,6 @@ int main(void)
 	
 	while(1)
     {
-		wdt_reset();
         mrf_check_flags(&handle_rx, &handle_tx);
         if (time_to_send()) {
 	        mrf_send16(0x6000, 3, "Pat");
