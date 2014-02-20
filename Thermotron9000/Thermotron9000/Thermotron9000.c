@@ -25,6 +25,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/wdt.h>
 #include <util/delay.h>
 #include <stdio.h>
 #include "lcd/lcd.h"
@@ -106,13 +107,12 @@ void handle_rx(mrf_rx_info_t *rxinfo, uint8_t *rx_buffer) {
 
 	// this will be whatever is still undecoded :)
 	//printf_P(PSTR("Packet data, starting from %u:\n"), i);
-	char data[9];
+	char data[9] = {0};
 	int index = 0;
-	while((rx_buffer[i] != '!') && (index < 8))
+	while((rx_buffer[i] != '¡') && (index < 8))
 	{
 		data[index++] = rx_buffer[i++];
 	}
-
 	data[index] = '\0';
 	lcd_clrscr();
 	lcd_puts(data);
@@ -153,15 +153,10 @@ void initSPI()
 
 int main(void)
 {	
+	wdt_enable(WDTO_2S);
 	lcd_init(LCD_DISP_ON_CURSOR);
 	lcd_clrscr();
-	lcd_command(LCD_ENTRY_INC_SHIFT);
-	lcd_puts("Starting in: 5...4...3...2...1...");
-	for(int i = 0; i < 26; i++)
-	{
-		_delay_ms(250);
-		lcd_command(LCD_MOVE_DISP_LEFT);
-	}
+	lcd_puts("Init'd");
 	initSPI();
 	DDRD |= (1<<PIND1);
 		
@@ -177,12 +172,15 @@ int main(void)
 	sei();
     
 	char buf[20];
-	sprintf(buf, "%u", mrf_pan_read());
+	sprintf(buf, "PAN:%X", mrf_pan_read());
 	lcd_clrscr();
 	lcd_puts(buf);
-	
+	wdt_reset();
+	_delay_ms(1000);
+	lcd_clrscr();
 	while(1)
     {
+		wdt_reset();
         mrf_check_flags(&handle_rx, &handle_tx);
         if (time_to_send()) {
 	        mrf_send16(0x6000, 3, "Pat");
