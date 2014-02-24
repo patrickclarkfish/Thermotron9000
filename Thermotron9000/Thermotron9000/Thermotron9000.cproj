@@ -107,6 +107,12 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="l74hc595\l74hc595.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="l74hc595\l74hc595.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="lcd\lcd.c">
       <SubType>compile</SubType>
     </Compile>
@@ -126,6 +132,13 @@
   <ItemGroup>
     <Folder Include="lcd" />
     <Folder Include="mrf24j" />
+    <Folder Include="l74hc595" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\README.md">
+      <SubType>compile</SubType>
+      <Link>README.md</Link>
+    </None>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

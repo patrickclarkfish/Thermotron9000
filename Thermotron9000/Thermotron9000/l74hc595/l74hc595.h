@@ -17,14 +17,14 @@ Please refer to LICENSE file for licensing information.
 #define L74HC595_H_
 
 //setup ports
-#define L74HC595_DDR DDRD
-#define L74HC595_PORT PORTD
-#define L74HC595_SERPIN PD2
-#define L74HC595_RCLKPIN PD3
-#define L74HC595_SRCLKPIN PD4
+#define L74HC595_DDR DDRC
+#define L74HC595_PORT PORTC
+#define L74HC595_SERPIN PINC1
+#define L74HC595_RCLKPIN PINC2
+#define L74HC595_SRCLKPIN PINC3
 
 //setup number of chip attached to the board
-#define L74HC595_ICNUMBER 2
+#define L74HC595_ICNUMBER 1
 
 uint8_t l74hc595_icarray[L74HC595_ICNUMBER];
 

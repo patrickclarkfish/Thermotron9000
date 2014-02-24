@@ -30,6 +30,7 @@
 #include <stdio.h>
 #include "lcd/lcd.h"
 #include "mrf24j/lib_mrf24j.h"
+#include "l74hc595/l74hc595.h"
 
 ISR(INT0_vect) {
 	mrf_interrupt_handler();
@@ -154,9 +155,15 @@ void initSPI()
 int main(void)
 {	
 	wdt_enable(WDTO_2S);
-	lcd_init(LCD_DISP_ON_CURSOR);
-	lcd_clrscr();
-	lcd_puts("Init'd");
+	//lcd_init(LCD_DISP_ON_CURSOR);
+	//lcd_clrscr();
+	//lcd_puts("Init'd");
+	l74hc595_init();
+	l74hc595_setregalloff();
+	l74hc595_shiftout();
+	_delay_ms(1000);
+	l74hc595_setchipbyte(0, 1);
+	l74hc595_shiftout();
 	initSPI();
 	DDRD |= (1<<PIND1);
 		
@@ -173,11 +180,11 @@ int main(void)
     
 	char buf[20];
 	sprintf(buf, "PAN:%X", mrf_pan_read());
-	lcd_clrscr();
-	lcd_puts(buf);
+	//lcd_clrscr();
+	//lcd_puts(buf);
 	wdt_reset();
 	_delay_ms(1000);
-	lcd_clrscr();
+	//lcd_clrscr();
 	while(1)
     {
 		wdt_reset();
