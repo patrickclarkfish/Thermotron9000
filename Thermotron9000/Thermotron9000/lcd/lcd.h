@@ -82,6 +82,14 @@
  *  ports by adapting the LCD_DATAx_PORT and LCD_DATAx_PIN definitions.
  *  
  */
+#define 595_DATA0_PIN    5
+#define 595_DATA1_PIN    4
+#define 595_DATA2_PIN    3
+#define 595_DATA3_PIN    2
+#define 595_RS_PIN       6
+#define 595_E_PIN        1
+#define 595_BACKLIGHT    7
+#define 595_DEFAULT_STATE (~((1 << 595_E_PIN) | (1 << 595_RS_PIN))
 #define LCD_PORT         PORTC        /**< port for the LCD lines   */
 #define LCD_DATA0_PORT   LCD_PORT     /**< port for 4bit data bit 0 */
 #define LCD_DATA1_PORT   LCD_PORT     /**< port for 4bit data bit 1 */
