@@ -11,3 +11,7 @@ https://github.com/karlp/karlnet/tree/master/common
 
 Peter Fluery's LCD library from:
 http://homepage.hispeed.ch/peterfleury/lcdlibrary.zip
+
+Which will be modified to use Davide Gironi's 75hc595 library:
+https://code.google.com/p/davidegironi/downloads/detail?name=avr_lib_l74hc595_01.zip
+to control the lcd using 3 pins.
